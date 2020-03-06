@@ -9,8 +9,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONArray
 import java.io.InputStream
 import java.lang.Exception
+import java.math.BigInteger
+import java.security.MessageDigest
+import java.sql.Timestamp
 
 class MainActivity : AppCompatActivity() {
+
 
 
     private lateinit var mucDudeAdapter : MUCDudeRecyclerAdapter
@@ -21,9 +25,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setRecyclerView()// Adapter instanciado
-        mucDudeAdapter.setData(getDataSet()) // Datos
+
+        Log.i("MUCMARVEL APII", getMarvelAPIUrl())
+
+        //mucDudeAdapter.setData(getDataSet()) // Datos
+        MUCMarvelVolley(getMarvelAPIUrl(), this, mucDudeAdapter).callMarvelAPI()
 
     }
+
 
 
     private fun setRecyclerView(){
@@ -34,6 +43,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun String.md5():String{
+        val md5Al = MessageDigest.getInstance("MD5")
+        return BigInteger(1,
+            md5Al.digest(toByteArray())).toString(16).padStart(32, '0')
+    }
+    fun getMarvelAPIUrl(): String{
+        val tString = Timestamp(System.currentTimeMillis()).toString()
+        val hString = tString + "ede49375699321e3736436b53011574333433f40" + "1681a9eefcf8fbf43de66c59727718da"
+        val hash = hString.md5()
+
+        var marvelAPI : String = "https://gateway.marvel.com:443/v1/public/characters?ts=" +
+                tString +
+                "&limit=100&apikey=ede49375699321e3736436b53011574333433f40&hash="+hash
+        return marvelAPI
+
+    }
 
     private fun getDataSet() : ArrayList<MUCDude> {
         val dudes = ArrayList<MUCDude>()

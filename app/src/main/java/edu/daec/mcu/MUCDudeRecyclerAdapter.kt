@@ -36,6 +36,7 @@ class MUCDudeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     fun setData(listDudes: List<MUCDude>){
         dudes = listDudes
+        notifyDataSetChanged()
     }
 
     class MUCDudeViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -43,8 +44,8 @@ class MUCDudeRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         val notes = itemView.notes
 
         fun bind(mucDude: MUCDude){
-            name.text = mucDude.name
-            notes.text = mucDude.hnotes
+            name.text = mucDude.alias
+            notes.text = mucDude.notes
         }
 
     }
