@@ -50,12 +50,12 @@ class MainActivity : AppCompatActivity() {
     }
     fun getMarvelAPIUrl(): String{
         val tString = Timestamp(System.currentTimeMillis()).toString()
-        val hString = tString + "ede49375699321e3736436b53011574333433f40" + "1681a9eefcf8fbf43de66c59727718da"
+        val hString = tString + "" + ""
         val hash = hString.md5()
 
         var marvelAPI : String = "https://gateway.marvel.com:443/v1/public/characters?ts=" +
                 tString +
-                "&limit=100&apikey=ede49375699321e3736436b53011574333433f40&hash="+hash
+                "&limit=100&apikey=&hash="+hash
         return marvelAPI
 
     }
